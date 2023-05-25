@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<table id="example" class="table table-striped" style="width:100%">
+  <thead>
+    <tr>
+      <th>URL</th>
+      <th>Username</th>
+      <th>Password</th>
+      <th>Categoria</th>
+      <th>Remarks</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>URL</th>
+      <th>Username</th>
+      <th>Password</th>
+      <th>Categoria</th>
+      <th>Remarks</th>
+    </tr>
+  </tfoot> 
+  <tbody> 
+    {% for x in itemkey %} 
+    <tr>
+      <td><a href="{{x.url}}">{{x.url}}</a></td>
+      <td>{{x.username}}</td>
+      <td>{{x.password}}</td>
+      <td>{{x.categoria}}</td>
+      <td>{{x.remarks}}</td>
+    </tr>
+    {% endfor %}
+  </tbody> 
+  </table>
+{% endblock content %}
