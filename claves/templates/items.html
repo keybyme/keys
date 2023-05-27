@@ -8,6 +8,7 @@
       <th>Password</th>
       <th>Categoria</th>
       <th>Remarks</th>
+      <th>Edit</th>
     </tr>
   </thead>
   <tfoot>
@@ -17,6 +18,7 @@
       <th>Password</th>
       <th>Categoria</th>
       <th>Remarks</th>
+      <th>Edit</th>
     </tr>
   </tfoot> 
   <tbody> 
@@ -27,6 +29,7 @@
       <td>{{x.password}}</td>
       <td>{{x.categoria}}</td>
       <td>{{x.remarks}}</td>
+      <td><a href="{% url 'editx' x.id %}">edit</a></td>
     </tr>
     {% endfor %}
   </tbody> 
