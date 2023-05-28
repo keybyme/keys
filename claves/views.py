@@ -20,7 +20,6 @@ def items(request):
     tran=Item.objects.all()
     return render(request, 'items.html', {"itemkey":tran})
 
-@login_required(login_url='/login/')
 def edit_items(request, pk):
     tran=Item.objects.get(id=pk)
     form=ItemForm(request.POST or None, instance=tran)
@@ -29,6 +28,19 @@ def edit_items(request, pk):
             form.save()
             return redirect('itemsx')
     return render(request, 'edit_item.html', {"form":form})
+
+def add_items(request):
+    formx=ItemForm(request.POST or None)
+    if request.method == 'POST':
+        formx.save()
+        return redirect('itemsx')
+    return render(request, 'add_item.html', {"form":formx})
+
+def delete_items(request, pk):
+    tran=Item.objects.get(id=pk)
+    tran.delete()
+    return redirect('itemsx')
+    
 
 def login_user(request):
     if request.user.is_authenticated:

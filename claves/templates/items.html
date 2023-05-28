@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
+
+<a href="{% url 'addx' %}" class="btn btn-primary">Add Item <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
 <table id="example" class="table table-striped" style="width:100%">
   <thead>
     <tr>
@@ -9,6 +11,7 @@
       <th>Categoria</th>
       <th>Remarks</th>
       <th>Edit</th>
+      <th>Delete</th>
     </tr>
   </thead>
   <tfoot>
@@ -19,6 +22,7 @@
       <th>Categoria</th>
       <th>Remarks</th>
       <th>Edit</th>
+      <th>Delete</th>
     </tr>
   </tfoot> 
   <tbody> 
@@ -29,7 +33,8 @@
       <td>{{x.password}}</td>
       <td>{{x.categoria}}</td>
       <td>{{x.remarks}}</td>
-      <td><a href="{% url 'editx' x.id %}">edit</a></td>
+      <td><a href="{% url 'editx' x.id %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+      <td><a href="{% url 'deletex' x.id %}"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></a></td>
     </tr>
     {% endfor %}
   </tbody> 
