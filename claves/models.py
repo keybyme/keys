@@ -16,4 +16,23 @@ class Item(models.Model):
     class Meta:
         db_table="item"
     def __str__(self):
-        return f"{self.url} {self.username} {self.password} {self.categoria} {self.remarks}"          
+        return f"{self.url} {self.username} {self.password} {self.categoria} {self.remarks}"        
+
+class Catpeople(models.Model):
+    catp=models.CharField(max_length=100, null=True, blank=True)
+    class Meta:
+        db_table="catpeople"
+    def __str__(self):
+        return self.catp
+    
+class Contacto(models.Model):
+    name=models.CharField(max_length=100, null=True, blank=True)
+    address=models.CharField(max_length=100, null=True, blank=True)
+    phone=models.CharField(max_length=100, null=True, blank=True)
+    email=models.CharField(max_length=100, null=True, blank=True)
+    catpeople=models.ForeignKey('Catpeople', on_delete=models.DO_NOTHING)
+
+    class Meta:
+        db_table="contacto" 
+        def __str__(self):
+            return f"{self.name} {self.address} {self.phone} {self.email} {self.catpeople}"       

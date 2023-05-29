@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<a href="{% url 'addconx' %}" class="btn btn-primary">Add Contacto <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+<table id="example" class="table table-striped" style="width:100%">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Telephone</th>
+      <th>E-mail</th>
+      <th>Categoria</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Telephone</th>
+      <th>E-mail</th>
+      <th>Categoria</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </tfoot> 
+  <tbody> 
+    {% for x in contactokey %} 
+    <tr>
+      <td>{{x.name}}</td>
+      <td>{{x.address}}</td>
+      <td>{{x.phone}}</td>
+      <td>{{x.email}}</td>
+      <td>{{x.catpeople}}</td>
+      <td><a href="{% url 'editconx' x.id %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+      <td><a href="{% url 'deleteconx' x.id %}"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></a></td>
+    </tr>
+    {% endfor %}
+  </tbody> 
+  </table>
+{% endblock content %}

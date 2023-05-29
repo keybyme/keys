@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import Categoria, Item
+from .models import Categoria, Item, Contacto
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from .forms import ItemForm
+from .forms import ItemForm, ContactoForm
 
 
 
@@ -20,6 +20,11 @@ def items(request):
     tran=Item.objects.all()
     return render(request, 'items.html', {"itemkey":tran})
 
+@login_required(login_url='/login/')
+def contactos(request):
+    tranco=Contacto.objects.all()
+    return render(request, 'contactos.html', {"contactokey":tranco})
+
 def edit_items(request, pk):
     tran=Item.objects.get(id=pk)
     form=ItemForm(request.POST or None, instance=tran)
@@ -29,6 +34,15 @@ def edit_items(request, pk):
             return redirect('itemsx')
     return render(request, 'edit_item.html', {"form":form})
 
+def edit_contactos(request, pk):
+    tranco=Contacto.objects.get(id=pk)
+    form=ContactoForm(request.POST or None, instance=tranco)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('contactosx')
+    return render(request, 'edit_contacto.html', {"form":form})
+
 def add_items(request):
     formx=ItemForm(request.POST or None)
     if request.method == 'POST':
@@ -36,10 +50,22 @@ def add_items(request):
         return redirect('itemsx')
     return render(request, 'add_item.html', {"form":formx})
 
+def add_contactos(request):
+    formxy=ContactoForm(request.POST or None)
+    if request.method == 'POST':
+        formxy.save()
+        return redirect('contactosx')
+    return render(request, 'add_item.html', {"form":formxy})
+
 def delete_items(request, pk):
     tran=Item.objects.get(id=pk)
     tran.delete()
     return redirect('itemsx')
+
+def delete_contactos(request, pk):
+    tranco=Contacto.objects.get(id=pk)
+    tranco.delete()
+    return redirect('contactosx')
     
 
 def login_user(request):

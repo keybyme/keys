@@ -1,5 +1,5 @@
 from django import forms 
-from .models import Item
+from .models import Item, Contacto
 
 class ItemForm(forms.ModelForm):
     class Meta:
@@ -12,3 +12,15 @@ class ItemForm(forms.ModelForm):
             'categoria':forms.Select(attrs={'class': 'form-control'}),
             'remarks':forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+class ContactoForm(forms.ModelForm):
+    class Meta:
+        model=Contacto 
+        fields=['name', 'address', 'phone', 'email', 'catpeople']
+        widgets={
+            'name':forms.TextInput(attrs={'class': 'form-control'}),
+            'address':forms.TextInput(attrs={'class': 'form-control'}),
+            'phone':forms.TextInput(attrs={'class': 'form-control'}),
+            'email':forms.TextInput(attrs={'class': 'form-control'}),
+            'catpeople':forms.Select(attrs={'class': 'form-control'}),
+        }        
