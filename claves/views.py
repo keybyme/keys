@@ -17,7 +17,7 @@ def cats(request):
 
 @login_required(login_url='/login/')
 def items(request):
-    tran=Item.objects.all()
+    tran=Item.objects.all().order_by('categoria', 'remarks')
     return render(request, 'items.html', {"itemkey":tran})
 
 @login_required(login_url='/login/')
