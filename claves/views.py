@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Categoria, Item, Contacto
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import ItemForm, ContactoForm
 
@@ -17,7 +17,7 @@ def cats(request):
 
 @login_required(login_url='/login/')
 def items(request):
-    tran=Item.objects.all().order_by('categoria', 'remarks')
+    tran=Item.objects.all().order_by("remarks")
     return render(request, 'items.html', {"itemkey":tran})
 
 @login_required(login_url='/login/')
@@ -80,3 +80,8 @@ def login_user(request):
                 login(request, user)
                 return redirect('nombrex')
     return render(request, 'accounts/login.html', {})
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
