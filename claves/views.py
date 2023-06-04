@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import ItemForm, ContactoForm, QrcodeForm,QrcodeForm2
 import io
 import pyqrcode
-
+import base64
 @login_required(login_url='/login/')
 def index(request):
     return render(request, 'main.html')
@@ -96,6 +96,32 @@ def logout_user(request):
 #     return render(request, 'qrcode.html', {'qrform': formsx})
 
 
+# def generate_qr_code(request):
+#     if request.method == 'POST':
+#         form = QrcodeForm2(request.POST)
+#         if form.is_valid():
+#             link = form.cleaned_data['link']
+#             qr_code = pyqrcode.create(link)
+
+#             # Generate the QR code image and save it to a BytesIO object
+#             buffer = io.BytesIO()
+#             qr_code.png(buffer, scale=5)
+#             buffer.seek(0)
+
+#             # Set the appropriate response headers for automatic download
+#             response = HttpResponse(content_type='image/png')
+#             response['Content-Disposition'] = 'attachment; filename="qrcode.png"'
+#             response['Content-Length'] = str(len(buffer.getvalue()))
+
+#             # Write the image data to the response
+#             response.write(buffer.getvalue())
+
+#             return response
+#     else:
+#         form = QrcodeForm2()
+
+#     return render(request, 'qrcode.html', {'form': form})
+
 def generate_qr_code(request):
     if request.method == 'POST':
         form = QrcodeForm2(request.POST)
@@ -108,15 +134,10 @@ def generate_qr_code(request):
             qr_code.png(buffer, scale=5)
             buffer.seek(0)
 
-            # Set the appropriate response headers for automatic download
-            response = HttpResponse(content_type='image/png')
-            response['Content-Disposition'] = 'attachment; filename="qrcode.png"'
-            response['Content-Length'] = str(len(buffer.getvalue()))
+            # Encode the image data as base64
+            image_data = base64.b64encode(buffer.getvalue()).decode()
 
-            # Write the image data to the response
-            response.write(buffer.getvalue())
-
-            return response
+            return render(request, 'qrcode.html', {'form': form, 'image_data': image_data})
     else:
         form = QrcodeForm2()
 
