@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from .models import Categoria, Item, Contacto, Qrcode
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from .forms import ItemForm, ContactoForm, QrcodeForm
-
-
+from .forms import ItemForm, ContactoForm, QrcodeForm,QrcodeForm2
+import io
+import pyqrcode
 
 @login_required(login_url='/login/')
 def index(request):
@@ -86,10 +87,37 @@ def logout_user(request):
     logout(request)
     return redirect('login')
 
-def createQrcode(request):
-    formsx=QrcodeForm(request.POST, request.FILES or None)
-    if request.method=="POST":
-        if formsx.is_valid():
-            formsx.save
-            return redirect('nombrex')
-    return render(request, 'qrcode.html', {'qrform': formsx})
+# def createQrcode(request):
+#     formsx=QrcodeForm(request.POST, request.FILES or None)
+#     if request.method=="POST":
+#         if formsx.is_valid():
+#             formsx.save
+#             return redirect('nombrex')
+#     return render(request, 'qrcode.html', {'qrform': formsx})
+
+
+def generate_qr_code(request):
+    if request.method == 'POST':
+        form = QrcodeForm2(request.POST)
+        if form.is_valid():
+            link = form.cleaned_data['link']
+            qr_code = pyqrcode.create(link)
+
+            # Generate the QR code image and save it to a BytesIO object
+            buffer = io.BytesIO()
+            qr_code.png(buffer, scale=5)
+            buffer.seek(0)
+
+            # Set the appropriate response headers for automatic download
+            response = HttpResponse(content_type='image/png')
+            response['Content-Disposition'] = 'attachment; filename="qrcode.png"'
+            response['Content-Length'] = str(len(buffer.getvalue()))
+
+            # Write the image data to the response
+            response.write(buffer.getvalue())
+
+            return response
+    else:
+        form = QrcodeForm2()
+
+    return render(request, 'qrcode.html', {'form': form})

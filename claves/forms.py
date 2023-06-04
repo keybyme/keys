@@ -33,3 +33,6 @@ class QrcodeForm(forms.ModelForm):
         widgets={
             'link':forms.ClearableFileInput(attrs={'class': 'form-control'})
         }            
+
+class QrcodeForm2(forms.Form):
+    link = forms.URLField(label='Link')        
