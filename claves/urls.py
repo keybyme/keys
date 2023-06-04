@@ -13,5 +13,6 @@ urlpatterns = [
     path('add_contacto', views.add_contactos, name="addconx"),
     path('delete_item/<int:pk>', views.delete_items, name="deletex"),
     path('delete_contacto/<int:pk>', views.delete_contactos, name="deleteconx"),
-    path('logout/', views.logout_user, name="logoutx")
+    path('logout/', views.logout_user, name="logoutx"),
+    path('qrcode/', views.createQrcode, name="qrcodex")
 ]

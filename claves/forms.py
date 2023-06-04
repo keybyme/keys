@@ -1,5 +1,5 @@
 from django import forms 
-from .models import Item, Contacto
+from .models import Item, Contacto, Qrcode
 
 class ItemForm(forms.ModelForm):
     class Meta:
@@ -23,4 +23,13 @@ class ContactoForm(forms.ModelForm):
             'phone':forms.TextInput(attrs={'class': 'form-control'}),
             'email':forms.TextInput(attrs={'class': 'form-control'}),
             'catpeople':forms.Select(attrs={'class': 'form-control'}),
-        }        
+        }    
+
+
+class QrcodeForm(forms.ModelForm):
+    class Meta:
+        model=Qrcode
+        fields=["link"]
+        widgets={
+            'link':forms.ClearableFileInput(attrs={'class': 'form-control'})
+        }            

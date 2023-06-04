@@ -36,3 +36,10 @@ class Contacto(models.Model):
         db_table="contacto" 
         def __str__(self):
             return f"{self.name} {self.address} {self.phone} {self.email} {self.catpeople}"       
+        
+class Qrcode(models.Model):
+    link=models.ImageField(upload_to='images/', null=True, blank=True)        
+    class Meta:
+        db_table="qrcode"
+    def __str__(self):
+        return f"{self.link}"

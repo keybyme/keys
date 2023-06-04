@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import Categoria, Item, Contacto
+from .models import Categoria, Item, Contacto, Qrcode
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from .forms import ItemForm, ContactoForm
+from .forms import ItemForm, ContactoForm, QrcodeForm
 
 
 
@@ -85,3 +85,11 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+def createQrcode(request):
+    formsx=QrcodeForm(request.POST, request.FILES or None)
+    if request.method=="POST":
+        if formsx.is_valid():
+            formsx.save
+            return redirect('nombrex')
+    return render(request, 'qrcode.html', {'qrform': formsx})

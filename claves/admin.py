@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Categoria, Item, Catpeople, Contacto
+from .models import Categoria, Item, Catpeople, Contacto, Qrcode
 
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
@@ -22,3 +22,5 @@ class ContactoAdmin(admin.ModelAdmin):
     list_display = ('name', 'address', 'phone', 'email', 'catpeople')
     search_fields = ('name', 'address', 'phone', 'email')
     list_filter = ('catpeople',)
+
+admin.site.register(Qrcode)    
