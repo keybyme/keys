@@ -43,3 +43,13 @@ class Qrcode(models.Model):
         db_table="qrcode"
     def __str__(self):
         return f"{self.link}"
+
+
+class Photo(models.Model): 
+    ph_link = models.ImageField(upload_to='images/',null=True, blank=True) 
+    
+    class Meta:
+        managed = True
+        db_table = 'photos'
+    def __str__(self) -> str:
+        return f"{self.ph_link}"

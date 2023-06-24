@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">KeyByMe</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,22 +24,13 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'nombrex' %}">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'contactosx' %}">Contactos</a>
+                    <a class="nav-link" href="{% url 'catsx' %}">Categorias</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'itemsx' %}">Items</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'qrcodex' %}">Qrcode</a>
-                  </li>  
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'photox' %}">Photos</a>
-                  </li> 
-                  <li class="nav-item">
                     <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logoutx' %}">Log out</a>
                   </li>
 
                   {% comment %} <li class="nav-item dropdown">

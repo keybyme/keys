@@ -1,12 +1,59 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Categoria, Item, Contacto, Qrcode
+from .models import Categoria, Item, Contacto, Qrcode, Photo
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from .forms import ItemForm, ContactoForm, QrcodeForm,QrcodeForm2
+from .forms import ItemForm, ContactoForm, QrcodeForm,QrcodeForm2, AddPhotoForm
 import io
 import pyqrcode
 import base64
+from io import BytesIO
+from PIL import Image
+
+
+## PHOTOS =========== PHOTOS =========== PHOTOS =========== PHOTOS =========== PHOTOS =========== PHOTOS ##
+
+MAX_IMAGE_SIZE = 1024
+ 
+
+
+def compress_image(image):
+    # Open the image using PIL
+    img = Image.open(image)
+
+    # Resize the image if necessary
+    if img.size[0] > MAX_IMAGE_SIZE or img.size[1] > MAX_IMAGE_SIZE:
+        img.thumbnail((MAX_IMAGE_SIZE, MAX_IMAGE_SIZE), Image.ANTIALIAS)
+
+    # Create an in-memory buffer to save the image
+    img_byte_array = io.BytesIO()
+
+    # Save the image to the buffer with the original format or JPEG format with compression
+    if img.format == 'PNG':
+        img.save(img_byte_array, format='PNG', optimize=True)
+    else:
+        img.save(img_byte_array, format='JPEG', optimize=True, quality=80)
+
+    # Rewind the buffer and replace the image file
+    img_byte_array.seek(0)
+    image.file = img_byte_array
+
+def add_photo(request): 
+    myphoto = Photo.objects.all()
+    form = AddPhotoForm(request.POST, request.FILES or None) 
+    if request.method == 'POST':
+        if form.is_valid():
+            photo = form.save(commit=False)  # Get the unsaved photo instance
+            
+            compress_image(photo.ph_link) 
+            photo.save()  # Save the photo instance to the database
+            return redirect('photox')
+    context = {'form':form, "myphoto":myphoto}
+    return render(request, 'add-photo.html',context)
+
+
+
+
 @login_required(login_url='/login/')
 def index(request):
     return render(request, 'main.html')
@@ -86,6 +133,7 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
 
 # def createQrcode(request):
 #     formsx=QrcodeForm(request.POST, request.FILES or None)

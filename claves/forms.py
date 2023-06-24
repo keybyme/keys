@@ -1,5 +1,15 @@
 from django import forms 
-from .models import Item, Contacto, Qrcode
+from .models import Item, Contacto, Qrcode, Photo
+
+class AddPhotoForm(forms.ModelForm):
+    class Meta:
+        model = Photo
+        fields = ['ph_link']
+        widgets = {
+            'ph_link': forms.ClearableFileInput(attrs={'class':'form-control', 'required':False}),
+           
+             
+        }
 
 class ItemForm(forms.ModelForm):
     class Meta:
