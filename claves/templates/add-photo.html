@@ -10,6 +10,8 @@
     <tr>
         <td>
 {% for x in myphoto %}
+ 
+<a href="{% url 'delete_photo' x.id %}" class="btn btn-danger">X</a>
 <a href=""><img class="img-fluid p-1" src="/media/{{ x.ph_link }}" id="resize" style="max-width: 300px;" /></a> 
 
 {% endfor %}

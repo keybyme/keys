@@ -114,6 +114,11 @@ def delete_contactos(request, pk):
     tranco=Contacto.objects.get(id=pk)
     tranco.delete()
     return redirect('contactosx')
+
+def delete_photo(request, pk):
+    tranco=Photo.objects.get(id=pk)
+    tranco.delete()
+    return redirect('photox')
     
 
 def login_user(request):

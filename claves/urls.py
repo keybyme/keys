@@ -16,4 +16,5 @@ urlpatterns = [
     path('logout/', views.logout_user, name="logoutx"),
     path('qrcode/', views.generate_qr_code, name="qrcodex"), 
     path('photo/', views.add_photo, name="photox"), 
+    path('delete_photo/<int:pk>', views.delete_photo, name="delete_photo"), 
 ]
